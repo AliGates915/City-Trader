@@ -209,9 +209,9 @@ const Sales = () => {
           ) : (
             <>
               {/* Header */}
-              <div className="hidden lg:grid grid-cols-[0.2fr_1fr_1fr_0.7fr_0.7fr_0.4fr_0.8fr_0.8fr_0.6fr] bg-gray-50 border-b border-gray-200 py-3 px-6 text-xs font-semibold text-gray-600 uppercase text-center">
+              <div className="hidden lg:grid grid-cols-[0.2fr_1fr_0.7fr_0.7fr_0.4fr_0.8fr_0.8fr_0.6fr] bg-gray-50 border-b border-gray-200 py-3 px-6 text-xs font-semibold text-gray-600 uppercase text-center">
                 <div>Sr</div>
-                <div>Supplier</div>
+                {/* <div>Supplier</div> */}
                 <div>Product</div>
                 {/* <div>Weight</div> */}
                 <div>Purchase Price</div>
@@ -227,11 +227,11 @@ const Sales = () => {
                 {filteredProductSection.map((row, i) => (
                   <div
                     key={i}
-                    className={`grid  grid-cols-[0.2fr_1fr_1fr_0.7fr_0.7fr_0.4fr_0.8fr_0.8fr_0.6fr] items-center px-6 py-2 text-sm text-center ${i % 2 === 0 ? "bg-white" : "bg-gray-50"
+                    className={`grid  grid-cols-[0.2fr_1fr_0.7fr_0.7fr_0.4fr_0.8fr_0.8fr_0.6fr] items-center px-6 py-2 text-sm text-center ${i % 2 === 0 ? "bg-white" : "bg-gray-50"
                       } hover:bg-gray-100 transition`}
                   >
                     <div>{i + 1}</div>
-                    <div className="">{row.supplier || "-"}</div>
+                    {/* <div className="">{row.supplier || "-"}</div> */}
                     <div className="">{row.product || "-"}</div>
                     {/* <div>{row.weight || "-"}</div> */}
                     <div>{row.purchasePrice.toLocaleString()}</div>
@@ -251,8 +251,8 @@ const Sales = () => {
               </div>
 
               {/* Totals Row */}
-              <div className="grid grid-cols-[0.2fr_1fr_1fr_0.5fr_0.7fr_0.7fr_0.4fr_0.8fr_1fr_0.6fr] bg-gray-100 py-3 px-6 text-xs font-semibold text-gray-700 text-center border-t border-gray-200">
-                <div></div>
+              <div className="grid grid-cols-[0.2fr_1fr_0.5fr_0.7fr_0.7fr_0.4fr_0.8fr_1fr_0.6fr] bg-gray-100 py-3 px-9 text-xs font-semibold text-gray-700 text-center border-t border-gray-200">
+              
                 <div></div>
                 <div></div>
                 <div></div>

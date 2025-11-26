@@ -107,7 +107,7 @@ const ListOfItems = () => {
     } catch (error) {
       console.error("Failed to fetch item details", error);
     } finally {
-      setTimeout(() => setLoading(false), 1000);
+      setTimeout(() => setLoading(false), 3000);
     }
   }, []);
   useEffect(() => {
@@ -190,7 +190,7 @@ const ListOfItems = () => {
     } catch (error) {
       console.error("Failed to fetch item unit", error);
     } finally {
-      setTimeout(() => setLoading(false), 1000);
+      setTimeout(() => setLoading(false), 3000);
     }
   }, []);
   useEffect(() => {
@@ -210,7 +210,7 @@ const ListOfItems = () => {
     } catch (error) {
       console.error("Failed to fetch Manufacturer", error);
     } finally {
-      setTimeout(() => setLoading(false), 1000);
+      setTimeout(() => setLoading(false), 3000);
     }
   }, []);
   useEffect(() => {
@@ -228,7 +228,7 @@ const ListOfItems = () => {
     } catch (error) {
       console.error("Failed to fetch Supplier", error);
     } finally {
-      setTimeout(() => setLoading(false), 1000);
+      setTimeout(() => setLoading(false), 3000);
     }
   }, []);
   useEffect(() => {
@@ -246,7 +246,7 @@ const ListOfItems = () => {
     } catch (error) {
       console.error("Failed to fetch Shelves", error);
     } finally {
-      setTimeout(() => setLoading(false), 1000);
+      setTimeout(() => setLoading(false), 3000);
     }
   }, []);
   useEffect(() => {

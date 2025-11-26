@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-
 import { Printer } from "lucide-react";
 import { toast } from "react-toastify";
 import { api } from "../../../../context/ApiService";
@@ -10,11 +9,14 @@ import TableSkeleton from "../../Components/Skeleton";
 
 const BankLedger = () => {
   const [banks, setBanks] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordsPerPage = 10;
+
   const [ledgerEntries, setLedgerEntries] = useState([]);
   const [selectedBank, setSelectedBank] = useState("");
   const today = new Date().toISOString().split("T")[0];
   const [dateFrom, setDateFrom] = useState(today);
-  const [dateTo, setDateTo] = useState(today);
+  const [dateTo, setDateTo] = useState("");
   const [loading, setLoading] = useState(false);
 
   // Fetch Banks
@@ -53,13 +55,14 @@ const BankLedger = () => {
     if (selectedBank) fetchBankLedger(selectedBank);
   }, [selectedBank, dateFrom, dateTo]);
 
-  const totalDebit = ledgerEntries
-    
-    .reduce((sum, e) => sum + e.amount, 0);
+  const totalDebit = ledgerEntries.reduce((sum, e) => sum + e.amount, 0);
 
-  const totalCredit = ledgerEntries
-  
-    .reduce((sum, e) => sum + e.balanceAfter, 0);
+  const totalCredit = ledgerEntries.reduce((sum, e) => sum + e.balanceAfter, 0);
+
+  const indexOfLast = currentPage * recordsPerPage;
+  const indexOfFirst = indexOfLast - recordsPerPage;
+  const currentRecords = ledgerEntries.slice(indexOfFirst, indexOfLast);
+  const totalPages = Math.ceil(ledgerEntries.length / recordsPerPage);
 
   return (
     <div className="p-4 bg-gray-50 min-h-screen">
@@ -67,8 +70,9 @@ const BankLedger = () => {
 
       <div className="px-6 mx-auto">
         <div className="flex justify-between items-center mb-4">
-          <h1 className="text-2xl font-bold text-newPrimary">Bank Ledger Details</h1>
-          
+          <h1 className="text-2xl font-bold text-newPrimary">
+            Bank Ledger Details
+          </h1>
         </div>
 
         {/* Filters */}
@@ -94,7 +98,9 @@ const BankLedger = () => {
 
           {/* From Date */}
           <div className="w-[200px]">
-            <label className="block text-gray-700 font-medium mb-2">Date From</label>
+            <label className="block text-gray-700 font-medium mb-2">
+              Date From
+            </label>
             <input
               type="date"
               value={dateFrom}
@@ -105,7 +111,9 @@ const BankLedger = () => {
 
           {/* To Date */}
           <div className="w-[200px]">
-            <label className="block text-gray-700 font-medium mb-2">Date To</label>
+            <label className="block text-gray-700 font-medium mb-2">
+              Date To
+            </label>
             <input
               type="date"
               value={dateTo}
@@ -123,7 +131,7 @@ const BankLedger = () => {
             <div className="text-center py-6 text-gray-500">
               Please select a bank to view ledger entries.
             </div>
-          ) : ledgerEntries.length === 0 ? (
+          ) : currentRecords.length === 0 ? (
             <div className="text-center py-6 text-gray-500">
               No ledger entries found.
             </div>
@@ -138,12 +146,12 @@ const BankLedger = () => {
                 <div>Balance After</div>
               </div>
 
-              {ledgerEntries.map((entry, i) => (
+              {currentRecords.map((entry, i) => (
                 <div
                   key={entry._id || i}
                   className="grid grid-cols-[0.5fr_1.2fr_2fr_1fr_1fr_1fr] px-6 py-3 text-sm border-b hover:bg-gray-50"
                 >
-                  <div>{i + 1}</div>
+                  <div>{indexOfFirst + i + 1}</div>
                   <div>{new Date(entry.date).toLocaleDateString()}</div>
                   <div>{entry.description}</div>
                   <div
@@ -164,15 +172,54 @@ const BankLedger = () => {
               <div className="grid grid-cols-[3.7fr_1fr_1fr_1fr] bg-gray-100 py-3 px-6 text-xs font-semibold text-gray-700">
                 <div></div>
                 <div></div>
-               
+
                 <div className="text-red-600">
                   Total Amount: {totalDebit.toLocaleString()}
                 </div>
-                 <div className="text-green-600">
+                <div className="text-green-600">
                   Total Balance After: {totalCredit.toLocaleString()}
                 </div>
               </div>
             </>
+          )}
+          {totalPages > 1 && (
+            <div className="flex justify-between items-center py-4 px-6 bg-white border-t">
+              <p className="text-sm text-gray-600">
+                Showing {indexOfFirst + 1}–
+                {Math.min(indexOfLast, ledgerEntries.length)} of{" "}
+                {ledgerEntries.length}
+              </p>
+
+              <div className="flex gap-2">
+                <button
+                  disabled={currentPage === 1}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(prev - 1, 1))
+                  }
+                  className={`px-3 py-1 rounded-md ${
+                    currentPage === 1
+                      ? "bg-gray-300 cursor-not-allowed"
+                      : "bg-newPrimary text-white"
+                  }`}
+                >
+                  Previous
+                </button>
+
+                <button
+                  disabled={currentPage === totalPages}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                  }
+                  className={`px-3 py-1 rounded-md ${
+                    currentPage === totalPages
+                      ? "bg-gray-300 cursor-not-allowed"
+                      : "bg-newPrimary text-white"
+                  }`}
+                >
+                  Next
+                </button>
+              </div>
+            </div>
           )}
         </div>
       </div>

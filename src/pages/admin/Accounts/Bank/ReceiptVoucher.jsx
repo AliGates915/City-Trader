@@ -9,6 +9,7 @@ import TableSkeleton from "../../Components/Skeleton";
 const ReceiptVoucher = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 10; // you can change to 8 or 15
+  const [searchQuery, setSearchQuery] = useState("");
 
   const [vouchers, setVouchers] = useState([]);
   const [banks, setBanks] = useState([]);
@@ -201,12 +202,24 @@ const ReceiptVoucher = () => {
   };
 
   /** ================== UI ================== **/
+  const filteredVouchers = vouchers.filter((v) => {
+    const search = searchQuery.toLowerCase();
+    return (
+      v.receiptId?.toLowerCase().includes(search) ||
+      v.salesman?.employeeName?.toLowerCase().includes(search) ||
+      v.bank?.bankName?.toLowerCase().includes(search) ||
+      v.amountReceived?.toString().includes(search)
+    );
+  });
 
   // 🔹 Pagination Logic
   const indexOfLastRecord = currentPage * recordsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-  const currentRecords = vouchers.slice(indexOfFirstRecord, indexOfLastRecord);
-  const totalPages = Math.ceil(vouchers.length / recordsPerPage);
+  const currentRecords = filteredVouchers.slice(
+    indexOfFirstRecord,
+    indexOfLastRecord
+  );
+  const totalPages = Math.ceil(filteredVouchers.length / recordsPerPage);
 
   // Reset to first page when vouchers change (after add/edit/delete)
   useEffect(() => {
@@ -218,19 +231,31 @@ const ReceiptVoucher = () => {
       <CommanHeader />
       <div className="flex justify-between mb-6 px-6">
         <h1 className="text-2xl font-bold text-newPrimary">Receipt Vouchers</h1>
-        <button
-          className="bg-newPrimary text-white px-4 py-2 rounded-lg hover:bg-newPrimary/90"
-          onClick={handleAdd}
-        >
-          + Add Voucher
-        </button>
+        <div className="flex items-center gap-3">
+          {/* 🔍 Search Bar */}
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search vouchers..."
+            className="px-4 py-2 border rounded-lg w-60 focus:ring-2 focus:ring-newPrimary/50 focus:border-newPrimary outline-none"
+          />
+
+          {/* ➕ Add Button */}
+          <button
+            className="bg-newPrimary text-white px-4 py-2 rounded-lg hover:bg-newPrimary/90"
+            onClick={handleAdd}
+          >
+            + Add Voucher
+          </button>
+        </div>
       </div>
 
       {/* Table Section */}
       <div className="border rounded-xl shadow bg-white mx-6 overflow-hidden">
         {loading ? (
           <TableSkeleton rows={6} cols={7} />
-        ) : vouchers.length === 0 ? (
+        ) : currentRecords.length === 0 ? (
           <div className="text-center py-6 text-gray-500">
             No vouchers found
           </div>
@@ -278,12 +303,10 @@ const ReceiptVoucher = () => {
                   </tr>
                 ))}
               </tbody>
+              
             </table>
-          </div>
-        )}
-      </div>
-      {totalPages > 1 && (
-        <div className="flex justify-between items-center py-4 px-6 bg-white border-t mt-2 rounded-b-xl">
+              {totalPages > 1 && (
+        <div className="flex justify-between items-center py-2 px-6 bg-white  mt-2 rounded-b-xl">
           <p className="text-sm text-gray-600">
             Showing {indexOfFirstRecord + 1} to{" "}
             {Math.min(indexOfLastRecord, vouchers.length)} of {vouchers.length}{" "}
@@ -319,6 +342,10 @@ const ReceiptVoucher = () => {
           </div>
         </div>
       )}
+          </div>
+        )}
+      </div>
+    
 
       {/* Form Modal */}
       {isFormOpen && (

@@ -10,7 +10,7 @@ const BankPosition = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [showZero, setShowZero] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 15;
+  const recordsPerPage = 10;
 
   // 🔹 Fetch banks
   const fetchBanks = useCallback(async () => {

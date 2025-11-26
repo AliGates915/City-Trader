@@ -40,9 +40,7 @@ export const handleDirectPrint = (reportData = {}) => {
         <hr />
 
         <h2>Salesman Daily Report</h2>
-        <p><b>Salesman:</b> ${salesman || "-"} | <b>Date:</b> ${new Date(
-    date
-  ).toLocaleDateString()}</p>
+        <p><b>Salesman:</b> ${salesman || "-"} | <b>Date:</b> ${new Date(date).toLocaleDateString()}</p>
 
         <!-- 🔹 PRODUCT SECTION -->
         ${
@@ -53,7 +51,6 @@ export const handleDirectPrint = (reportData = {}) => {
             <thead>
               <tr>
                 <th>Sr</th>
-                <th>Supplier</th>
                 <th>Product</th>
                 <th>Purchase Price</th>
                 <th>Sale Price</th>
@@ -69,23 +66,20 @@ export const handleDirectPrint = (reportData = {}) => {
                   (p, i) => `
                   <tr>
                     <td>${i + 1}</td>
-                    <td>${p.supplier || "-"}</td>
                     <td>${p.product || "-"}</td>
                     <td>${p.purchasePrice?.toLocaleString() || 0}</td>
                     <td>${p.salePrice?.toLocaleString() || 0}</td>
                     <td>${p.qty || 0}</td>
                     <td>${p.purchaseTotal?.toLocaleString() || 0}</td>
                     <td>${p.saleTotal?.toLocaleString() || 0}</td>
-                    <td>${(
-                      (p.saleTotal || 0) - (p.purchaseTotal || 0)
-                    ).toLocaleString()}</td>
+                    <td>${((p.saleTotal || 0) - (p.purchaseTotal || 0)).toLocaleString()}</td>
                   </tr>`
                 )
                 .join("")}
             </tbody>
             <tfoot>
               <tr>
-                <td colspan="6" style="text-align:right;">Totals:</td>
+                <td colspan="5" style="text-align:right;">Totals:</td>
                 <td>${totals.totalPurchase?.toLocaleString() || 0}</td>
                 <td>${totals.totalSales?.toLocaleString() || 0}</td>
                 <td>${(
@@ -153,6 +147,7 @@ export const handleDirectPrint = (reportData = {}) => {
   win.document.close();
   win.print();
 };
+
 
 export const handleLedgerPrint = (ledgerEntries = []) => {
   if (!ledgerEntries.length) return;
