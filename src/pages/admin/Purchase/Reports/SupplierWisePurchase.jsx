@@ -98,6 +98,11 @@ const SupplierWisePurchase = () => {
     (sum, e) => sum + (parseFloat(e.Total) || 0),
     0
   );
+  // 🔥 ADD THIS
+  const totalQty = ledgerEntries.reduce(
+    (sum, e) => sum + (parseFloat(e.Qty) || 0),
+    0
+  );
 
   // 4️⃣ PAGINATION
   const indexOfLastRecord = currentPage * recordsPerPage;
@@ -238,7 +243,7 @@ const SupplierWisePurchase = () => {
             ) : (
               <>
                 {/* Header */}
-                <div className="hidden lg:grid grid-cols-[0.3fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr] bg-gray-100 py-3 px-6 text-xs font-semibold text-gray-600 uppercase">
+                <div className="hidden lg:grid grid-cols-[0.3fr_1fr_1fr_1.8fr_1.5fr_1fr_1fr_1fr] bg-gray-100 py-3 px-6 text-xs font-semibold text-gray-600 uppercase">
                   <div>SR</div>
                   <div>Date</div>
                   <div>ID</div>
@@ -247,7 +252,7 @@ const SupplierWisePurchase = () => {
                   <div>Rate</div>
                   <div>Qty</div>
                   <div>Amount</div>
-                  <div>Net Amount</div>
+                  {/* <div>Net Amount</div> */}
                 </div>
 
                 {/* Rows */}
@@ -255,7 +260,7 @@ const SupplierWisePurchase = () => {
                   {currentRecords.map((entry, i) => (
                     <div
                       key={i}
-                      className="grid grid-cols-[0.3fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr] items-center px-6 py-3 hover:bg-gray-50 text-sm"
+                      className="grid grid-cols-[0.3fr_1fr_1fr_1.8fr_1.5fr_1fr_1fr_1fr] items-center px-6 py-3 hover:bg-gray-50 text-sm"
                     >
                       <div>{i + 1 + indexOfFirstRecord}</div>
                       <div>{entry.Date || "-"}</div>
@@ -265,26 +270,29 @@ const SupplierWisePurchase = () => {
                       <div>{entry.Rate || "-"}</div>
                       <div>{entry.Qty || "-"}</div>
                       <div>{entry.Amount || "-"}</div>
-                      <div>{entry.Total || "-"}</div>
+                      {/* <div>{entry.Total || "-"}</div> */}
                     </div>
                   ))}
                 </div>
 
                 {/* Totals */}
-                <div className="grid grid-cols-[0.3fr_0.5fr_0.5fr_1fr_1fr_1fr_1fr_1fr_1fr] items-center whitespace-nowrap bg-gray-100 py-3 px-6 text-xs font-semibold text-gray-700">
+                <div className="grid grid-cols-[0.3fr_0.5fr_0.5fr_1.8fr_1.5fr_1fr_1fr_1fr] items-center whitespace-nowrap bg-gray-100 py-3 px-6 text-xs font-semibold text-gray-700">
                   <div></div>
                   <div></div>
                   <div></div>
                   <div></div>
                   <div></div>
                   <div></div>
-                  <div></div>
+                  {/* 🔥 SHOW TOTAL QTY */}
+                  <div className="text-blue-600">
+                    Total Qty: {totalQty.toLocaleString()}
+                  </div>
                   <div className="text-red-600">
                     Total Amount: {totalDebit.toLocaleString()}
                   </div>
-                  <div className="text-green-600">
+                  {/* <div className="text-green-600">
                     Total Net Amoun: {totalCredit.toLocaleString()}
-                  </div>
+                  </div> */}
                 </div>
               </>
             )}

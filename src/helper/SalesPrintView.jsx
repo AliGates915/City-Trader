@@ -211,7 +211,6 @@ export const handleLedgerPrint = (ledgerEntries = []) => {
               <th>Rate</th>
               <th>Qty</th>
               <th>Amount</th>
-              <th>Net Amount</th>
             </tr>
           </thead>
           <tbody>
@@ -227,7 +226,6 @@ export const handleLedgerPrint = (ledgerEntries = []) => {
                     <td>${parseFloat(entry.Rate || 0).toLocaleString()}</td>
                     <td>${parseFloat(entry.Qty || 0).toLocaleString()}</td>
                     <td>${parseFloat(entry.Amount || 0).toLocaleString()}</td>
-                    <td>${parseFloat(entry.Total || 0).toLocaleString()}</td>
                   </tr>`
               )
               .join("")}
@@ -238,7 +236,6 @@ export const handleLedgerPrint = (ledgerEntries = []) => {
               <td>-</td>
               <td>${totalQty.toLocaleString()}</td>
               <td>${totalAmount.toLocaleString()}</td>
-              <td>${totalOverall.toLocaleString()}</td>
             </tr>
           </tfoot>
         </table>

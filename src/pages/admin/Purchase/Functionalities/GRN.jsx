@@ -474,13 +474,13 @@ const GRN = () => {
             <div className="overflow-x-auto">
               <div className="max-h-[400px] overflow-y-auto custom-scrollbar">
                 <div className="inline-block min-w-[1200px] w-full align-middle">
-                  <div className="hidden lg:grid grid-cols-[0.2fr_1fr_1fr_1fr_1fr_0.2fr] gap-6 bg-gray-100 py-3 px-6 text-xs font-semibold text-gray-600 uppercase sticky top-0 z-10 border-b border-gray-200">
+                  <div className="hidden lg:grid grid-cols-[0.2fr_1fr_1fr_1.5fr_1fr_0.5fr] items-center gap-6 bg-gray-100 py-4 px-6 text-xs font-semibold text-gray-600 uppercase sticky top-0 z-10 border-b border-gray-200">
                     <div>Sr</div>
                     <div>GRN ID</div>
                     <div>GRN Date</div>
                     <div>Supplier</div>
                     <div>Total Amount</div>
-                    <div className={`${loading ? "" : "text-right"}`}>
+                    <div className={`${loading ? "" : "text-left"}`}>
                       Actions
                     </div>
                   </div>
@@ -490,7 +490,7 @@ const GRN = () => {
                       <TableSkeleton
                         rows={grns.length || 5}
                         cols={6}
-                        className="lg:grid-cols-[0.2fr_1fr_1fr_1fr_1fr_0.2fr]"
+                        className="items-center lg:grid-cols-[0.2fr_1fr_1fr_1fr_1fr_0.5fr]"
                       />
                     ) : filteredGrns.length === 0 ? (
                       <div className="text-center py-4 text-gray-500 bg-white">
@@ -500,7 +500,7 @@ const GRN = () => {
                       currentRecords.map((grn, i) => (
                         <div
                           key={grn._id}
-                          className="grid grid-cols-1 lg:grid-cols-[0.2fr_1fr_1fr_1fr_1fr_0.2fr] items-center gap-6 px-6 py-4 text-sm bg-white hover:bg-gray-50 transition"
+                          className="grid grid-cols-1 lg:grid-cols-[0.2fr_1fr_1fr_1.5fr_1fr_0.5fr] items-center gap-6 px-6 py-4 text-sm bg-white hover:bg-gray-50 transition"
                         >
                           <div className="text-gray-600">
                             {indexOfFirstRecord + i + 1}
@@ -518,7 +518,7 @@ const GRN = () => {
                           <div className="text-gray-500">
                             {grn.totalAmount || "-"}
                           </div>
-                          <div className="flex justify-end gap-3">
+                          <div className="flex gap-3">
                             <button
                               onClick={() => handleEditClick(grn)}
                               className="py-1 text-sm rounded text-blue-600"
