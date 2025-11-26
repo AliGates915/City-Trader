@@ -36,9 +36,9 @@ const Recovery = () => {
   const fetchcustomersList = async () => {
     try {
       setSalesmanLodaing(true);
-      const response = await api.get(`/customers`);
+      const response = await api.get(`/customers/isPending`);
 
-      setCustomersList(response);
+      setCustomersList(response.customers);
     } catch (error) {
       console.error(" Failed to fetch customers by fetchcustomersList:", error);
     } finally {

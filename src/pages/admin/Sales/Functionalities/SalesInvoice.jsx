@@ -97,9 +97,11 @@ const SalesInvoice = () => {
   const fetchSaleman = async () => {
     try {
       setLoading(true);
-      const response = await api.get(`/employees/salesman`);
+      const response = await api.get(`/employees/reports`);
+      console.log(response);
+      
 
-      setSalesmanList(response.employees);
+      setSalesmanList(response);
     } catch (error) {
       console.error(" Failed to fetch customers by salesman:", error);
     } finally {

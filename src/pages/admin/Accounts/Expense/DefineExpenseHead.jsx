@@ -124,7 +124,7 @@ const DefineExpenseHead = () => {
       setDescription("");
       setEditingExpense(null);
     } catch (err) {
-      toast.error("Failed to save");
+      toast.error(err.response.data.message ||"Failed to save");
     } finally {
       setIsSaving(false);
     }

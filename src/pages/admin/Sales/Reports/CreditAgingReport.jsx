@@ -211,7 +211,7 @@ const CreditAgingReport = () => {
                         rows={currentRecords.length || 5}
                         cols={13}
                       />
-                    ) : apiData.length > 0 ? (
+                    ) : currentRecords.length > 0 ? (
                       currentRecords.map((customer, cIdx) => (
                         <div key={cIdx} className="bg-white">
                           {/* Customer Header */}
@@ -267,7 +267,7 @@ const CreditAgingReport = () => {
                   </div>
 
                   {/* Totals Footer */}
-                  {apiData.length > 0 && (
+                  {currentRecords.length > 0 && (
                     <div className="grid grid-cols-[0.2fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr] gap-4 bg-gray-100 py-3 px-6 text-xs font-semibold text-gray-700 whitespace-nowrap">
                       <div className=""></div>
                       <div className=""></div>
@@ -298,8 +298,8 @@ const CreditAgingReport = () => {
                 <div className="flex justify-between items-center py-4 px-6 bg-white border-t rounded-b-xl mt-2 shadow-sm">
                   <p className="text-sm text-gray-600">
                     Showing {indexOfFirstRecord + 1}–
-                    {Math.min(indexOfLastRecord, apiData.length)} of{" "}
-                    {apiData.length} customers
+                    {Math.min(indexOfLastRecord, currentRecords.length)} of{" "}
+                    {currentRecords.length} customers
                   </p>
 
                   <div className="flex gap-2">

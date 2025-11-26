@@ -483,7 +483,7 @@ console.log(currentRecoveries);
               {/* Salesman Field */}
               <div className="flex items-start gap-6">
                 <label className="text-gray-700 font-medium w-24 mt-2">
-                  Sales Officer <span className="text-red-500">*</span>
+                  Sales Officer 
                 </label>
 
                 <div className="flex flex-col">
