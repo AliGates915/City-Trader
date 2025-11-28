@@ -762,8 +762,8 @@ const OrderTaking = () => {
 
                   {/* Product Entry */}
                   <div className="border p-4 rounded-lg space-y-3">
-                    <div className="grid grid-cols-7 gap-3 items-end">
-                      <div>
+                    <div className="grid grid-cols-6 gap-3 items-end w-full">
+                      <div className="w-full">
                         <label className="text-gray-700 text-sm">Product</label>
                         <select
                           value={product}
@@ -785,7 +785,7 @@ const OrderTaking = () => {
                         </select>
                       </div>
 
-                      <div>
+                      <div className="w-full">
                         <label className="text-gray-700 text-sm">
                           Purchase
                         </label>
@@ -798,7 +798,7 @@ const OrderTaking = () => {
                         />
                       </div>
 
-                      <div>
+                      <div className="w-full">
                         <label className="text-gray-700 text-sm">Rate</label>
                         <input
                           type="number"
@@ -808,7 +808,7 @@ const OrderTaking = () => {
                         />
                       </div>
 
-                      <div>
+                      <div className="w-full">
                         <label className="text-gray-700 text-sm">Qty</label>
                         <input
                           type="number"
@@ -819,7 +819,7 @@ const OrderTaking = () => {
                         />
                       </div>
 
-                      <div>
+                      <div className="w-full">
                         <label className="text-gray-700 text-sm">Total</label>
                         <input
                           type="number"
@@ -829,7 +829,7 @@ const OrderTaking = () => {
                         />
                       </div>
 
-                      <div>
+                      <div className="w-full">
                         <button
                           type="button"
                           onClick={handleAddItem}
@@ -849,7 +849,7 @@ const OrderTaking = () => {
 
                     {/* Items Table */}
                     <div className="mt-4 border border-gray-200 rounded-lg">
-                      <div className="grid grid-cols-[3fr_1fr_1fr_1fr_1fr_1fr] bg-gray-200 text-sm font-semibold text-gray-600">
+                      <div className="grid grid-cols-[3fr_1fr_1fr_1fr_1fr] bg-gray-200 text-sm font-semibold text-gray-600">
                         <div className="px-4 py-2">Product</div>
 
                         {/* <div className="px-4 py-2">Purchase</div> */}
@@ -867,7 +867,7 @@ const OrderTaking = () => {
                         items.map((it, i) => (
                           <div
                             key={i}
-                            className="grid grid-cols-[3fr_1fr_1fr_1fr_1fr_1fr] text-sm bg-white border-t"
+                            className="grid grid-cols-[3fr_1fr_1fr_1fr_1fr] text-sm bg-white border-t"
                           >
                             <div className="px-4 py-2">{it.product}</div>
                             {/* <div className="px-4 py-2">{it.purchase}</div>  */}

@@ -19,7 +19,7 @@ const DefineSupplier = () => {
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [productsSupplied, setProductsSupplied] = useState("");
-  const [paymentTerms, setPaymentTerms] = useState("");
+  const [paymentTerms, setPaymentTerms] = useState("CreditCard");
   const [status, setStatus] = useState(true);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [designation, setDesignation] = useState("");
@@ -31,7 +31,7 @@ const DefineSupplier = () => {
   const sliderRef = useRef(null);
   const [loading, setLoading] = useState(true);
   const [mobileNumber, setMobileNumber] = useState("");
-  const [creditTime, setCreditTime] = useState("");
+  const [creditTime, setCreditTime] = useState(45);
   const [creditLimitError, setCreditLimitError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -93,14 +93,14 @@ const DefineSupplier = () => {
     setEmail("");
     setAddress("");
     setProductsSupplied("");
-    setPaymentTerms("");
+    setPaymentTerms("CreditCard");
     setPhoneNumber("");
     setMobileNumber("");
     setDesignation("");
     setNtn("");
     setGst("");
     setCreditLimit("");
-
+    setCreditTime(45);
     setStatus(true);
   };
 
@@ -111,8 +111,6 @@ const DefineSupplier = () => {
 
   // Save or Update Supplier
   const handleSave = async () => {
-    
-
     setIsSaving(true);
 
     const formData = {
@@ -150,13 +148,13 @@ const DefineSupplier = () => {
       setEmail("");
       setAddress("");
       setProductsSupplied("");
-      setPaymentTerms("");
+      setPaymentTerms("CreditCard");
       setPhoneNumber("");
       setDesignation("");
       setNtn("");
       setGst("");
       setCreditLimit("");
-      setCreditTime("");
+      setCreditTime(45);
       setStatus(true);
       setIsSliderOpen(false);
       setIsEdit(false);
@@ -269,9 +267,9 @@ const DefineSupplier = () => {
     indexOfLastRecord
   );
   const totalPages = Math.ceil(filteredSuppliers.length / recordsPerPage);
-useEffect(() => {
-  setCurrentPage(1)
-}, [searchQuery])
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery]);
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
@@ -656,8 +654,6 @@ useEffect(() => {
                       className="w-full p-2 border rounded"
                       placeholder="Enter cash limit"
                     />
-
-                    
                   </div>
                 </div>
               )}

@@ -455,19 +455,6 @@ const ExpensePage = () => {
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-gray-700 font-medium mb-2">
-                      Description
-                    </label>
-                    <input
-                      type="text"
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                      placeholder="Description"
-                      className="w-full p-3 border rounded-md"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-gray-700 font-medium mb-2">
                       Amount <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -475,6 +462,19 @@ const ExpensePage = () => {
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
                       placeholder="Amount"
+                      className="w-full p-3 border rounded-md"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-gray-700 font-medium mb-2">
+                      Description
+                    </label>
+                    <input
+                      type="text"
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                      placeholder="Description"
                       className="w-full p-3 border rounded-md"
                     />
                   </div>
@@ -505,8 +505,6 @@ const ExpensePage = () => {
               </p>
 
               <div className="mt-3">
-              
-
                 <ul className="space-y-1">
                   <div className="mt-3 space-y-2 text-sm">
                     <p>
@@ -521,8 +519,6 @@ const ExpensePage = () => {
                   </div>
                 </ul>
               </div>
-
-              
 
               <button
                 onClick={() => setViewExpense(null)}

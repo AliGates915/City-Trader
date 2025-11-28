@@ -45,7 +45,7 @@ const GRN = () => {
   const [nextGRNId, setNextGrnId] = useState("001");
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [salesTax, setSalesTax] = useState(0);
-
+  const [gst, setGst] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -172,6 +172,7 @@ const GRN = () => {
             item: p.item,
             qty: p.qty,
             rate: p.rate,
+            gst: p.gst || 0,
             total: p.total,
           })) || [],
         salesTax: grn.salesTax || 0,
@@ -268,7 +269,8 @@ const GRN = () => {
         item: it.item,
         qty: it.qty,
         rate: it.rate || 0,
-        total: it.total || it.qty * (it.rate || 0),
+        gst: it.gst || 0,
+        total: it.rate * it.qty + (it.gst || 0),
       }))
     );
 
@@ -318,6 +320,7 @@ const GRN = () => {
         itemId: it.itemId,
         item: it.item,
         qty: it.qty,
+        gst: it.gst || 0,
         rate: it.rate,
         total: it.total,
       })),
@@ -438,6 +441,7 @@ const GRN = () => {
     setItem(matched?._id || ""); // FIXED 🔥
     setQty(it.qty);
     setRate(it.rate);
+    setGst(it.gst || 0);
     setEditIndex(index);
     setIsItemEditMode(true);
   };
@@ -761,7 +765,7 @@ const GRN = () => {
                   <div className="space-y-4 border p-4 rounded-lg bg-gray-50">
                     <div className="flex gap-4">
                       {/* Item Dropdown */}
-                      <div className="flex-1 min-w-0">
+                      <div className="flex-[2] min-w-[200px]">
                         <label className="block text-gray-700 font-medium mb-2">
                           Item
                         </label>
@@ -817,6 +821,22 @@ const GRN = () => {
                         />
                       </div>
 
+                      {/* GST Amount */}
+                      <div className="flex-1 min-w-0">
+                        <label className="block text-gray-700 font-medium mb-2">
+                          GST
+                        </label>
+                        <input
+                          type="number"
+                          value={gst}
+                          onChange={(e) =>
+                            setGst(parseFloat(e.target.value) || 0)
+                          }
+                          className="w-full outline-none p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-newPrimary"
+                          placeholder="Enter GST amount"
+                        />
+                      </div>
+
                       {/* Total (auto calc) */}
                       <div className="flex-1 min-w-0">
                         <label className="block text-gray-700 font-medium mb-2">
@@ -848,7 +868,7 @@ const GRN = () => {
                             const selectedItem = itemOptions.find(
                               (opt) => opt._id === item
                             );
-                            const total = qty * rate;
+                            const total = qty * rate + gst;
 
                             // If updating an item
                             if (isItemEditMode) {
@@ -857,6 +877,7 @@ const GRN = () => {
                                 item: selectedItem.itemName,
                                 qty,
                                 rate,
+                                gst,
                                 total,
                               };
 
@@ -870,6 +891,7 @@ const GRN = () => {
                               setItem("");
                               setQty("");
                               setRate("");
+                              setGst(0);
                               setIsItemEditMode(false);
                               setEditIndex(null);
                               return;
@@ -881,6 +903,7 @@ const GRN = () => {
                               item: selectedItem.itemName,
                               qty,
                               rate,
+                              gst,
                               total,
                             };
 
@@ -916,6 +939,9 @@ const GRN = () => {
                                   Rate
                                 </th>
                                 <th className="px-4 py-2 border border-gray-300">
+                                  GST
+                                </th>
+                                <th className="px-4 py-2 border border-gray-300">
                                   Total
                                 </th>
                                 <th className="px-4 py-2 border border-gray-300">
@@ -940,6 +966,9 @@ const GRN = () => {
                                   </td>
                                   <td className="px-4 py-2 border border-gray-300">
                                     {it.rate}
+                                  </td>
+                                  <td className="px-4 py-2 border border-gray-300">
+                                    {it.gst || 0}
                                   </td>
                                   <td className="px-4 py-2 border border-gray-300">
                                     {it.total}
