@@ -87,9 +87,8 @@ const ViewModal = ({ type, data, onClose }) => {
                 </div>
                 <div>
                   <strong>Sales Tax :</strong>{" "}
-                  {data.salesTax ? `${parseFloat(data.salesTax) }%` : "0%"}
+                  {data.salesTax ? `${parseFloat(data.salesTax)}%` : "0%"}
                 </div>
-
                 <div>
                   <strong>Total Amount:</strong>{" "}
                   {data.totalAmount?.toLocaleString()}
@@ -304,6 +303,7 @@ const ViewModal = ({ type, data, onClose }) => {
                     <th>Item</th>
                     <th>Qty</th>
                     <th>Rate</th>
+                    <th>GST</th>
                     <th>Total</th>
                   </>
                 )}
@@ -355,6 +355,7 @@ const ViewModal = ({ type, data, onClose }) => {
                     <td className="text-center">{item.item}</td>
                     <td className="text-center">{item.qty}</td>
                     <td className="text-center">{item.rate}</td>
+                    <td className="text-center">{item.gst}</td>
                     <td className="text-center">
                       {item.total?.toLocaleString()}
                     </td>
