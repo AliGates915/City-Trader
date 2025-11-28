@@ -17,7 +17,7 @@ export default function ProfitLoss() {
   useEffect(() => {
     let timer;
     if (loading) {
-      setCountdown(3); // Reset
+      setCountdown(30); // Reset
       timer = setInterval(() => {
         setCountdown((prev) => {
           if (prev <= 1) {
