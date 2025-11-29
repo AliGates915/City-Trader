@@ -636,7 +636,7 @@ const GRN = () => {
             <div className="fixed inset-0 bg-gray-600/50 flex items-center justify-center z-50">
               <div
                 ref={sliderRef}
-                className="relative w-full md:w-[800px] bg-white rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh]"
+                className="relative w-full md:w-[850px] bg-white rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh]"
               >
                 {isSaving && (
                   <div className="fixed inset-0 bg-white/70 backdrop-blur-[1px] flex items-center justify-center z-[60]">
@@ -663,6 +663,7 @@ const GRN = () => {
                       setDescription("");
                       setIsEnable(true);
                       setEditingGrn(null);
+                      setGst(0)
                     }}
                   >
                     ×
@@ -891,7 +892,7 @@ const GRN = () => {
                               setItem("");
                               setQty("");
                               setRate("");
-                              setGst(0);
+                              setGst("");
                               setIsItemEditMode(false);
                               setEditIndex(null);
                               return;
@@ -911,6 +912,7 @@ const GRN = () => {
                             setItem("");
                             setQty("");
                             setRate("");
+                            setGst("");
                           }}
                           className="w-20 h-12 bg-newPrimary text-white rounded-lg hover:bg-newPrimary/80 transition"
                         >
