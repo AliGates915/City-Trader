@@ -264,14 +264,19 @@ const GRN = () => {
 
     // ✅ Items section (unchanged)
     setItemsList(
-      (grn.items || []).map((it) => ({
-        itemId: it.itemId,
-        item: it.item,
-        qty: it.qty,
-        rate: it.rate || 0,
-        gst: it.gst || 0,
-        total: it.rate * it.qty + (it.gst || 0),
-      }))
+      (grn.items || []).map((it) => {
+        const subtotal = (it.qty || 0) * (it.rate || 0);
+        const gstAmount = (subtotal * (it.gst || 0)) / 100;
+
+        return {
+          itemId: it.itemId,
+          item: it.item,
+          qty: it.qty,
+          rate: it.rate || 0,
+          gst: it.gst || 0,
+          total: subtotal + gstAmount,
+        };
+      })
     );
 
     console.log(itemsList);
@@ -831,11 +836,25 @@ const GRN = () => {
                         <input
                           type="number"
                           value={gst}
-                          onChange={(e) =>
-                            setGst(parseFloat(e.target.value) || 0)
-                          }
+                          onChange={(e) => {
+                            let val = parseFloat(e.target.value) || 0;
+
+                            // ❌ Prevent more than 100%
+                            if (val > 100) val = 100;
+                            if (val < 0) val = 0;
+
+                            // Subtotal = qty × rate
+                            const subtotal = (qty || 0) * (rate || 0);
+
+                            // GST amount calculation
+                            const gstAmt = (subtotal * val) / 100;
+
+                            setGst(val); // store percentage only
+                          }}
+                          max={100}
+                          min={0}
                           className="w-full outline-none p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-newPrimary"
-                          placeholder="Enter GST amount"
+                          placeholder="Enter GST %"
                         />
                       </div>
 
@@ -846,7 +865,10 @@ const GRN = () => {
                         </label>
                         <input
                           type="number"
-                          value={(qty || 0) * (rate || 0) + (gst || 0)}
+                          value={
+                            (qty || 0) * (rate || 0) +
+                            ((qty || 0) * (rate || 0) * (gst || 0)) / 100
+                          }
                           readOnly
                           className="w-full outline-none p-3 border border-gray-300 rounded-md bg-gray-100"
                           placeholder="Auto Total"
@@ -870,7 +892,9 @@ const GRN = () => {
                             const selectedItem = itemOptions.find(
                               (opt) => opt._id === item
                             );
-                            const total = qty * rate + gst;
+                            const subtotal = qty * rate;
+                            const gstAmt = (subtotal * gst) / 100;
+                            const total = subtotal + gstAmt;
 
                             // If updating an item
                             if (isItemEditMode) {
@@ -942,7 +966,7 @@ const GRN = () => {
                                   Rate
                                 </th>
                                 <th className="px-4 py-2 border border-gray-300">
-                                  GST
+                                  GST (%)
                                 </th>
                                 <th className="px-4 py-2 border border-gray-300">
                                   Total
