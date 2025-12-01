@@ -28,11 +28,11 @@ const purchaseFunctionalities = [
     label: "GRN",
     icon: <BadgeEuro strokeWidth={3} size={40} />,
   },
-  // {
-  //   to: "/admin/purchase/payment-to-supplier",
-  //   label: "Payment To Supplier",
-  //   icon: <DollarSign strokeWidth={3} size={40} />,
-  // },
+  {
+    to: "/admin/purchase/payment-to-supplier",
+    label: "Payment To Supplier",
+    icon: <DollarSign strokeWidth={3} size={40} />,
+  },
 ];
 
 // 🔹 Reports
