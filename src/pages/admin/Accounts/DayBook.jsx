@@ -32,7 +32,7 @@ const DayBook = () => {
 
         setSalesData(res.data.sales || []);
         setRecoveryData(res.data.recovery || []);
-        setCustomerData(res.data.cashDeposit || []); // <-- FIXED
+        // setCustomerData(res.data.cashDeposit || []); // <-- FIXED
         setExpenseData(res.data.expenses || []);
 
         setSummary(res.data.summary || {});
@@ -57,9 +57,9 @@ const DayBook = () => {
     (i.description || "").toLowerCase().includes(filterText)
   );
 
-  const filteredCustomers = customerData.filter((i) =>
-    (i.customer?.customerName || "").toLowerCase().includes(filterText)
-  );
+  // const filteredCustomers = customerData.filter((i) =>
+  //   (i.customer?.customerName || "").toLowerCase().includes(filterText)
+  // );
 
   const filteredExpenses = expenseData.filter((i) =>
     (i.expenseName || "").toLowerCase().includes(filterText)
@@ -68,7 +68,7 @@ const DayBook = () => {
   // ---------------- TOTALS ----------------
   const totalSales = filteredSales.reduce((s, a) => s + (a.amount || 0), 0);
   const totalRecovery = filteredRecovery.reduce((s, a) => s + (a.amount || 0), 0);
-  const totalCustomer = filteredCustomers.reduce((s, a) => s + (a.amountReceived || 0), 0);
+  // const totalCustomer = filteredCustomers.reduce((s, a) => s + (a.amountReceived || 0), 0);
   const totalExpense = filteredExpenses.reduce((s, a) => s + (a.amount || 0), 0);
 
   return (
@@ -99,163 +99,140 @@ const DayBook = () => {
           />
         </div>
 
-      {/* ---------------- TWO TABLES SECTION ---------------- */}
-<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+        {/* ---------------- TWO TABLES SECTION ---------------- */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
 
-  {/* ======================================================
-        TABLE 1 — SALES + RECOVERY + CUSTOMER CASH (Grouped)
+          {/* ======================================================
+        TABLE 1 — SALES + RECOVERY 
      ====================================================== */}
-  <div className="border rounded-xl shadow bg-white">
-    <div className="bg-gray-100 p-3 text-center text-lg font-semibold">
-      Sales + Recovery + Customer Cash
-    </div>
+          <div className="border rounded-xl shadow bg-white">
+            <div className="bg-gray-100 p-3 text-center text-lg font-semibold">
+              Sales + Recovery
+            </div>
 
-    {loading ? (
-      <TableSkeleton rows={8} cols={4} />
-    ) : (
-      <>
-        <table className="w-full text-left">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="p-3 border font-semibold">SR</th>
-              <th className="p-3 border font-semibold">Type</th>
-              <th className="p-3 border font-semibold">Description / Name</th>
-              <th className="p-3 border font-semibold">Amount</th>
-            </tr>
-          </thead>
-
-          <tbody>
-
-            {/* ---------------- SALES SECTION ---------------- */}
-            <tr>
-              <td colSpan={4} className="bg-blue-50 p-2 font-bold text-blue-700">
-                Sales:
-              </td>
-            </tr>
-
-            {filteredSales.length === 0 ? (
-              <tr>
-                <td colSpan={4} className="p-3 text-center text-gray-500">
-                  No sales found
-                </td>
-              </tr>
+            {loading ? (
+              <TableSkeleton rows={8} cols={4} />
             ) : (
-              filteredSales.map((item, idx) => (
-                <tr key={`sale-${idx}`}>
-                  <td className="p-3 border">{idx + 1}</td>
-                  <td className="p-3 border font-semibold">Sale</td>
-                  <td className="p-3 border">{item.description}</td>
-                  <td className="p-3 border font-semibold">{item.amount}</td>
-                </tr>
-              ))
+              <>
+                <table className="w-full text-left">
+                  <thead className="bg-gray-100">
+                    <tr>
+                      <th className="p-3 border font-semibold">SR</th>
+                      <th className="p-3 border font-semibold">Type</th>
+                      <th className="p-3 border font-semibold">Description / Name</th>
+                      <th className="p-3 border font-semibold">Amount</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+
+                    {/* ---------------- SALES SECTION ---------------- */}
+                    <tr>
+                      <td colSpan={4} className="bg-blue-50 p-2 font-bold text-blue-700">
+                        Sales:
+                      </td>
+                    </tr>
+
+                    {filteredSales.length === 0 ? (
+                      <tr>
+                        <td colSpan={4} className="p-3 text-center text-gray-500">
+                          No sales found
+                        </td>
+                      </tr>
+                    ) : (
+                      filteredSales.map((item, idx) => (
+                        <tr key={`sale-${idx}`}>
+                          <td className="p-3 border">{idx + 1}</td>
+                          <td className="p-3 border font-semibold">Sale</td>
+                          <td className="p-3 border">{item.description}</td>
+                          <td className="p-3 border font-semibold">{item.amount}</td>
+                        </tr>
+                      ))
+                    )}
+
+                    {/* ---------------- RECOVERY SECTION ---------------- */}
+                    <tr>
+                      <td colSpan={4} className="bg-green-50 p-2 font-bold text-green-700">
+                        Recovery:
+                      </td>
+                    </tr>
+
+                    {filteredRecovery.length === 0 ? (
+                      <tr>
+                        <td colSpan={4} className="p-3 text-center text-gray-500">
+                          No recovery found
+                        </td>
+                      </tr>
+                    ) : (
+                      filteredRecovery.map((item, idx) => (
+                        <tr key={`recovery-${idx}`}>
+                          <td className="p-3 border">{idx + 1}</td>
+                          <td className="p-3 border font-semibold">Recovery</td>
+                          <td className="p-3 border">{item.description}</td>
+                          <td className="p-3 border font-semibold">{item.amount}</td>
+                        </tr>
+                      ))
+                    )}
+
+
+                  </tbody>
+                </table>
+
+                {/* TOTAL */}
+                <div className="p-4 text-right font-bold text-green-600">
+                  Total = {totalSales + totalRecovery}
+                </div>
+              </>
             )}
+          </div>
 
-            {/* ---------------- RECOVERY SECTION ---------------- */}
-            <tr>
-              <td colSpan={4} className="bg-green-50 p-2 font-bold text-green-700">
-                Recovery:
-              </td>
-            </tr>
-
-            {filteredRecovery.length === 0 ? (
-              <tr>
-                <td colSpan={4} className="p-3 text-center text-gray-500">
-                  No recovery found
-                </td>
-              </tr>
-            ) : (
-              filteredRecovery.map((item, idx) => (
-                <tr key={`recovery-${idx}`}>
-                  <td className="p-3 border">{idx + 1}</td>
-                  <td className="p-3 border font-semibold">Recovery</td>
-                  <td className="p-3 border">{item.description}</td>
-                  <td className="p-3 border font-semibold">{item.amount}</td>
-                </tr>
-              ))
-            )}
-
-            {/* ---------------- CUSTOMER CASH SECTION ---------------- */}
-            <tr>
-              <td colSpan={4} className="bg-purple-50 p-2 font-bold text-purple-700">
-                Customer Cash:
-              </td>
-            </tr>
-
-            {filteredCustomers.length === 0 ? (
-              <tr>
-                <td colSpan={4} className="p-3 text-center text-gray-500">
-                  No cash deposits found
-                </td>
-              </tr>
-            ) : (
-              filteredCustomers.map((item, idx) => (
-                <tr key={`cash-${idx}`}>
-                  <td className="p-3 border">{idx + 1}</td>
-                  <td className="p-3 border font-semibold">Cash Deposit</td>
-                  <td className="p-3 border">{item.customer?.customerName}</td>
-                  <td className="p-3 border font-semibold">{item.amountReceived}</td>
-                </tr>
-              ))
-            )}
-
-          </tbody>
-        </table>
-
-        {/* TOTAL */}
-        <div className="p-4 text-right font-bold text-green-600">
-          Total = {totalSales + totalRecovery + totalCustomer}
-        </div>
-      </>
-    )}
-  </div>
-
-  {/* ======================================================
+          {/* ======================================================
            TABLE 2 — EXPENSE
      ====================================================== */}
-  <div className="border rounded-xl shadow bg-white">
-    <div className="bg-gray-100 p-3 text-center text-lg font-semibold">
-      Expenses
-    </div>
+          <div className="border rounded-xl shadow bg-white">
+            <div className="bg-gray-100 p-3 text-center text-lg font-semibold">
+              Expenses
+            </div>
 
-    {loading ? (
-      <TableSkeleton rows={5} cols={3} />
-    ) : (
-      <>
-        <table className="w-full text-left">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="p-3 border font-semibold">SR</th>
-              <th className="p-3 border font-semibold">Expense Name</th>
-              <th className="p-3 border font-semibold">Amount</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {filteredExpenses.length === 0 ? (
-              <tr>
-                <td colSpan={3} className="text-center p-4 text-gray-500">
-                  No expense found
-                </td>
-              </tr>
+            {loading ? (
+              <TableSkeleton rows={5} cols={3} />
             ) : (
-              filteredExpenses.map((item, idx) => (
-                <tr key={idx}>
-                  <td className="p-3 border">{idx + 1}</td>
-                  <td className="p-3 border">{item.expenseName}</td>
-                  <td className="p-3 border font-semibold">{item.amount}</td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              <>
+                <table className="w-full text-left">
+                  <thead className="bg-gray-100">
+                    <tr>
+                      <th className="p-3 border font-semibold">SR</th>
+                      <th className="p-3 border font-semibold">Expense Name</th>
+                      <th className="p-3 border font-semibold">Amount</th>
+                    </tr>
+                  </thead>
 
-        <div className="p-4 text-right font-bold text-red-600">
-          Total = {totalExpense}
+                  <tbody>
+                    {filteredExpenses.length === 0 ? (
+                      <tr>
+                        <td colSpan={3} className="text-center p-4 text-gray-500">
+                          No expense found
+                        </td>
+                      </tr>
+                    ) : (
+                      filteredExpenses.map((item, idx) => (
+                        <tr key={idx}>
+                          <td className="p-3 border">{idx + 1}</td>
+                          <td className="p-3 border">{item.expenseName}</td>
+                          <td className="p-3 border font-semibold">{item.amount}</td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+
+                <div className="p-4 text-right font-bold text-red-600">
+                  Total = {totalExpense}
+                </div>
+              </>
+            )}
+          </div>
         </div>
-      </>
-    )}
-  </div>
-</div>
 
 
         {/* ---------------- SUMMARY (UNCHANGED) ---------------- */}
