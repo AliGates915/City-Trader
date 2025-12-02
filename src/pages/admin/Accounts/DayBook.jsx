@@ -99,79 +99,164 @@ const DayBook = () => {
           />
         </div>
 
-        {/* ---------------- 4 COLUMNS GRID ---------------- */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 items-start">
+      {/* ---------------- TWO TABLES SECTION ---------------- */}
+<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
 
+  {/* ======================================================
+        TABLE 1 — SALES + RECOVERY + CUSTOMER CASH (Grouped)
+     ====================================================== */}
+  <div className="border rounded-xl shadow bg-white">
+    <div className="bg-gray-100 p-3 text-center text-lg font-semibold">
+      Sales + Recovery + Customer Cash
+    </div>
 
-          {/* ========== SALES ========== */}
-          <ColumnTable
-            title="Sales"
-            rows={filteredSales}
-            loading={loading}
-            columns={["SR", "Description", "Amount"]}
-            renderRow={(item, idx) => (
-              <>
-                <td className="p-3 border">{idx + 1}</td>
-                <td className="p-3 border">{item.description}</td>
-                <td className="p-3 border font-semibold">{item.amount}</td>
-              </>
+    {loading ? (
+      <TableSkeleton rows={8} cols={4} />
+    ) : (
+      <>
+        <table className="w-full text-left">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="p-3 border font-semibold">SR</th>
+              <th className="p-3 border font-semibold">Type</th>
+              <th className="p-3 border font-semibold">Description / Name</th>
+              <th className="p-3 border font-semibold">Amount</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            {/* ---------------- SALES SECTION ---------------- */}
+            <tr>
+              <td colSpan={4} className="bg-blue-50 p-2 font-bold text-blue-700">
+                Sales:
+              </td>
+            </tr>
+
+            {filteredSales.length === 0 ? (
+              <tr>
+                <td colSpan={4} className="p-3 text-center text-gray-500">
+                  No sales found
+                </td>
+              </tr>
+            ) : (
+              filteredSales.map((item, idx) => (
+                <tr key={`sale-${idx}`}>
+                  <td className="p-3 border">{idx + 1}</td>
+                  <td className="p-3 border font-semibold">Sale</td>
+                  <td className="p-3 border">{item.description}</td>
+                  <td className="p-3 border font-semibold">{item.amount}</td>
+                </tr>
+              ))
             )}
-            total={totalSales}
-            totalColor="text-green-600"
-          />
 
-          {/* ========== RECOVERY ========== */}
-          <ColumnTable
-            title="Recovery"
-            rows={filteredRecovery}
-            loading={loading}
-            columns={["SR", "Description", "Amount"]}
-            renderRow={(item, idx) => (
-              <>
-                <td className="p-3 border">{idx + 1}</td>
-                <td className="p-3 border">{item.description}</td>
-                <td className="p-3 border font-semibold">{item.amount}</td>
-              </>
+            {/* ---------------- RECOVERY SECTION ---------------- */}
+            <tr>
+              <td colSpan={4} className="bg-green-50 p-2 font-bold text-green-700">
+                Recovery:
+              </td>
+            </tr>
+
+            {filteredRecovery.length === 0 ? (
+              <tr>
+                <td colSpan={4} className="p-3 text-center text-gray-500">
+                  No recovery found
+                </td>
+              </tr>
+            ) : (
+              filteredRecovery.map((item, idx) => (
+                <tr key={`recovery-${idx}`}>
+                  <td className="p-3 border">{idx + 1}</td>
+                  <td className="p-3 border font-semibold">Recovery</td>
+                  <td className="p-3 border">{item.description}</td>
+                  <td className="p-3 border font-semibold">{item.amount}</td>
+                </tr>
+              ))
             )}
-            total={totalRecovery}
-            totalColor="text-green-600"
-          />
 
-          {/* ========== CUSTOMER ========== */}
-          <ColumnTable
-            title="Customer"
-            rows={filteredCustomers}
-            loading={loading}
-            columns={["SR", "Customer Name", "Amount Received"]}
-            renderRow={(item, idx) => (
-              <>
-                <td className="p-3 border">{idx + 1}</td>
-                <td className="p-3 border">{item.customer?.customerName}</td>
-                <td className="p-3 border font-semibold">{item.amountReceived}</td>
-              </>
+            {/* ---------------- CUSTOMER CASH SECTION ---------------- */}
+            <tr>
+              <td colSpan={4} className="bg-purple-50 p-2 font-bold text-purple-700">
+                Customer Cash:
+              </td>
+            </tr>
+
+            {filteredCustomers.length === 0 ? (
+              <tr>
+                <td colSpan={4} className="p-3 text-center text-gray-500">
+                  No cash deposits found
+                </td>
+              </tr>
+            ) : (
+              filteredCustomers.map((item, idx) => (
+                <tr key={`cash-${idx}`}>
+                  <td className="p-3 border">{idx + 1}</td>
+                  <td className="p-3 border font-semibold">Cash Deposit</td>
+                  <td className="p-3 border">{item.customer?.customerName}</td>
+                  <td className="p-3 border font-semibold">{item.amountReceived}</td>
+                </tr>
+              ))
             )}
-            total={totalCustomer}
-            totalColor="text-blue-600"
-          />
 
-          {/* ========== EXPENSE ========== */}
-          <ColumnTable
-            title="Expense"
-            rows={filteredExpenses}
-            loading={loading}
-            columns={["SR", "Expense Name", "Amount"]}
-            renderRow={(item, idx) => (
-              <>
-                <td className="p-3 border">{idx + 1}</td>
-                <td className="p-3 border">{item.expenseName}</td>
-                <td className="p-3 border font-semibold">{item.amount}</td>
-              </>
-            )}
-            total={totalExpense}
-            totalColor="text-red-600"
-          />
+          </tbody>
+        </table>
 
+        {/* TOTAL */}
+        <div className="p-4 text-right font-bold text-green-600">
+          Total = {totalSales + totalRecovery + totalCustomer}
         </div>
+      </>
+    )}
+  </div>
+
+  {/* ======================================================
+           TABLE 2 — EXPENSE
+     ====================================================== */}
+  <div className="border rounded-xl shadow bg-white">
+    <div className="bg-gray-100 p-3 text-center text-lg font-semibold">
+      Expenses
+    </div>
+
+    {loading ? (
+      <TableSkeleton rows={5} cols={3} />
+    ) : (
+      <>
+        <table className="w-full text-left">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="p-3 border font-semibold">SR</th>
+              <th className="p-3 border font-semibold">Expense Name</th>
+              <th className="p-3 border font-semibold">Amount</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {filteredExpenses.length === 0 ? (
+              <tr>
+                <td colSpan={3} className="text-center p-4 text-gray-500">
+                  No expense found
+                </td>
+              </tr>
+            ) : (
+              filteredExpenses.map((item, idx) => (
+                <tr key={idx}>
+                  <td className="p-3 border">{idx + 1}</td>
+                  <td className="p-3 border">{item.expenseName}</td>
+                  <td className="p-3 border font-semibold">{item.amount}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+
+        <div className="p-4 text-right font-bold text-red-600">
+          Total = {totalExpense}
+        </div>
+      </>
+    )}
+  </div>
+</div>
+
 
         {/* ---------------- SUMMARY (UNCHANGED) ---------------- */}
         <div className="mt-6 bg-white shadow p-6 rounded-xl">
