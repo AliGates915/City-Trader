@@ -75,7 +75,7 @@ const Login = () => {
         <div className="relative px-8 py-14 bg-white shadow-lg sm:rounded-3xl sm:p-16 max-w-lg w-full">
           <div className="max-w-md mx-auto">
             <h1 className="text-2xl font-bold text-gray-800 mb-8 text-center">
-              Welcome to City Trader
+              Welcome to Distribution System
             </h1>
 
             <form onSubmit={handleLogin} className="space-y-6">

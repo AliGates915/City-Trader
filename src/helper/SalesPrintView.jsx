@@ -927,7 +927,7 @@ export const handleSaleInvoicePrint = (orders = []) => {
 
     win.document.write(`
 
-      <div class="heading">City Trader Pvt. Ltd.</div>
+      <div class="heading">Distribution System Pvt. Ltd.</div>
      
      <div style="
   text-align:center; 
