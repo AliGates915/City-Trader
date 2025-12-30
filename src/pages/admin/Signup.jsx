@@ -71,7 +71,7 @@ const Signup = () => {
       );
 
       toast.success("Signup successful!");
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       const message =
         error.response?.data?.message ||
@@ -373,7 +373,7 @@ const Signup = () => {
             <p className="mt-6 text-center text-sm text-gray-500">
               Already have an account?{" "}
               <Link
-                to="/"
+                to="/login"
                 className="text-cyan-600 font-medium hover:underline"
               >
                 Log in

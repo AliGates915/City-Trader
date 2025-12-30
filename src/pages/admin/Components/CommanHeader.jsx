@@ -108,7 +108,7 @@ const navigate=useNavigate()
   const handleLogout = () => {
     localStorage.removeItem("userInfo");
     localStorage.removeItem("lastTokenCheck");
-    navigate("/");
+    navigate("/login");
   };
 
   return (

@@ -86,6 +86,8 @@ import DefineExpenseHead from "./pages/admin/Accounts/Expense/DefineExpenseHead.
 import CashDeposite from "./pages/admin/Accounts/CashDeposite/CashDeposite.jsx";
 import ProfitLoss from "./pages/admin/Accounts/ProfitLoss.jsx";
 import SupplierAging from "./pages/admin/Purchase/Reports/SupplierAging.jsx";
+import LandingPage from "./pages/LandingPage/LandingPage.jsx";
+
 
 function AppContent() {
   return (
@@ -95,7 +97,8 @@ function AppContent() {
         <Routes>
           {/* Public Routes */}
 
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
 
           {/* Admin Routes */}
